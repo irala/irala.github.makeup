@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#190a16">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta
+    name="description"
+    content="Perfumería de Navidad: un minijuego de compras de cosmética para móvil y escritorio."
+  >
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23190a16'/%3E%3Crect x='24' y='26' width='16' height='24' rx='5' fill='%23f2aac8'/%3E%3Crect x='27' y='18' width='10' height='9' rx='2' fill='%23efc57c'/%3E%3Crect x='22' y='12' width='20' height='6' rx='2' fill='%23efc57c'/%3E%3Cpath d='M38 12l8-5v7z' fill='%23bc3d61'/%3E%3Ccircle cx='45' cy='7' r='3' fill='%23fcf2e5'/%3E%3C/svg%3E"
+  >
+  <title>Perfumería de Navidad · La lista de la compra</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas
+    id="game"
+    tabindex="0"
+    aria-label="Perfumería de Navidad. Minijuego de compras: arrastra para recorrer la tienda y haz doble toque o doble clic en los productos de la lista."
+    aria-describedby="game-help"
+  >
+    Tu navegador necesita Canvas para jugar a Perfumería de Navidad.
+  </canvas>
+
+  <p class="sr-only" id="game-help">
+    En cada nivel aparece una lista de la compra. Arrastra el dedo o el ratón para
+    recorrer las estanterías y haz doble toque o doble clic sobre un producto para
+    cogerlo. Los productos cambian de estantería cada pocos segundos. Si coges un
+    producto que no está en la lista, devuelves a la estantería uno de los que ya
+    tenías en la cesta. Completa los cinco niveles antes de que se acabe el tiempo.
+    El botón de sonido de la esquina superior silencia el audio; también puedes usar
+    la tecla M.
+  </p>
+
+  <p class="sr-only" id="live" aria-live="polite" aria-atomic="true"></p>
+
+  <button
+    type="button"
+    class="mute-btn"
+    id="mute-btn"
+    role="switch"
+    aria-checked="true"
+    aria-label="Sonido"
+    aria-keyshortcuts="M"
+    title="Silenciar sonido (M)"
+  >
+    <svg class="mute-icon mute-icon-on" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9.2v5.6h3.7L13 19V5L7.7 9.2H4Z" fill="currentColor"/>
+      <path
+        d="M16 8.7a4.8 4.8 0 0 1 0 6.6M18.4 6.2a8 8 0 0 1 0 11.6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+      />
+    </svg>
+    <svg class="mute-icon mute-icon-off" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9.2v5.6h3.7L13 19V5L7.7 9.2H4Z" fill="currentColor"/>
+      <path
+        d="m16.2 9.2 4.8 4.8M21 9.2l-4.8 4.8"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+
+  <div class="overlay" id="overlay" hidden>
+    <section
+      class="panel"
+      id="panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ov-title"
+      aria-describedby="ov-text"
+      data-tone="start"
+    >
+      <div class="ornament" id="ov-art" aria-hidden="true"></div>
+      <p class="eyebrow" id="ov-eyebrow"></p>
+      <h1 class="title" id="ov-title"></h1>
+      <p class="text" id="ov-text"></p>
+      <div class="stars" id="ov-stars" aria-hidden="true" hidden></div>
+      <div class="stats" id="ov-stats"></div>
+      <p class="tip" id="ov-tip"></p>
+      <div class="actions">
+        <button class="btn btn-primary" id="ov-primary" type="button"></button>
+        <button class="btn btn-ghost" id="ov-secondary" type="button" hidden></button>
+      </div>
+    </section>
+  </div>
+
+  <div class="rotate" id="rotate" aria-hidden="true">
+    <div class="rotate-inner">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <rect x="22" y="8" width="36" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="40" cy="61" r="3" fill="currentColor"/>
+        <path d="M12 30a30 30 0 0 1 9-12M68 50a30 30 0 0 1-9 12" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M12 20v10h10M68 60V50H58" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p>Gira el móvil para entrar en la perfumería.</p>
+    </div>
+  </div>
+
+  <noscript>
+    <p class="noscript">Perfumería de Navidad necesita JavaScript para abrir sus puertas.</p>
+  </noscript>
+
+  <script src="game.js" defer></script>
+</body>
+</html>
